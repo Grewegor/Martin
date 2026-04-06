@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МАРТИН | Официальный сайт</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+</head>
+<body>
+    <div class="container" id="page-container">
+        <header>
+            <h1 id="main-title">Мартин</h1>
+            <div class="user-header" id="user-header" style="display: none;">
+                <div class="user-info">Добро пожаловать, <span id="username-display"></span>!</div>
+                <button class="logout-btn" id="logout-btn">Выход</button>
+            </div>
+        </header>
+        
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active" id="home-link">Главная</a></li>
+                <li><a href="tour.html" class="nav-link" id="tour-link">Дискография и тур</a></li>
+            </ul>
+        </nav>
+
+        <main class="content" id="main-content" style="display: none;">
+            <section class="hero">
+                <img src="assets/martin.png" alt="Мартин" class="featured-image" id="band-photo">
+            </section>
+
+            <section class="bio">
+                <h2 class="section-title">О певце</h2>
+                <p><strong>Мартин -</strong> российский певец, музыкальный продюсер, автор песен, аранжировщик, представитель России на Детском Евровидении 2015, финалист второго сезона телевизионного шоу «Голос. Дети», многократный победитель и обладатель гран-при российских и международных вокальных конкурсов.</p>
+            </section>
+
+            <section class="bio_dop">
+                <h2 class="section-title">Биография</h2>
+                <p>Миша родился 30 апреля 2003 года в Москве в семье математиков. Родители окончили механико-математический факультет Московского Государственного Университета имени М. В. Ломоносова.<br> <br>Начал заниматься вокалом в 3 года. Его мама окончила музыкальную школу, играла на фортепиано, и именно она привила сыну любовь к музыке. В детстве Миша заикался, и врач посоветовал ему заняться пением. Это и привело мальчика в вокальную студию. Миша начал свою сольную карьеру в местном ДК, где первый преподаватель по вокалу — Юлия Нарницкая сразу заметила у мальчика хорошие вокальные данные и слух. Постепенно набираясь навыков, Миша стал выступать на различных конкурсах и занимать призовые места.<br> <br>В 8 лет новым педагогом Миши стала Людмила Симон. Под её руководством он вышел на профессиональный уровень и добился значимых побед в престижных вокальных конкурсах, в том числе приняв участие в шоу Голос. Дети (финалист второго сезона) и Детском Евровидении — 2015 (6-е место среди 17 стран), а также стал актёром музыкального театра «Айвенго», где сыграл более 200 спектаклей. <br> <br>С 2015 по 2017 год был ведущим программы о детских видеоклипах «Горячая десяточка» на телеканале «Карусель».<br> <br>В 2017 году закончил музыкальную школу им. А. А. Алябьева по классу эстрадно-джазового вокала с «красным» дипломом.
+            </section>
+
+            <section class="discography-preview">
+                <h2 class="section-title">Дискография (основные альбомы)</h2>
+                <p class="data-hint">Данные загружаются из файла <code>data/albums.json</code> на сервере.</p>
+                <table class="bootstrap-table" id="albums-table">
+                    <thead>
+                        <tr>
+                            <th>Год</th>
+                            <th>Название альбома</th>
+                        </tr>
+                    </thead>
+                    <tbody id="albums-tbody">
+                        <!-- Заполняется из data/albums.json -->
+                    </tbody>
+                </table>
+                <div class="add-album-section">
+                    <h3 class="form-title">Добавить альбом</h3>
+                    <form id="add-album-form" class="album-form">
+                        <label for="album-year">Год</label>
+                        <input type="text" id="album-year" name="year" placeholder="например, 2025" required maxlength="4">
+                        <span class="error-message" id="album-year-error"></span>
+                        
+                        <label for="album-title">Название альбома</label>
+                        <input type="text" id="album-title" name="title" placeholder="название альбома" required>
+                        <span class="error-message" id="album-title-error"></span>
+                        
+                        <button type="submit" class="submit-album-btn">Добавить</button>
+                    </form>
+                    <p id="form-message" class="form-message" aria-live="polite"></p>
+                </div>
+            </section>
+
+            <section class="download-section">
+                <h2 class="section-title">Материалы для скачивания</h2>
+                <p class="download-link">
+                    <a href="assets/tour-schedule.pdf" download class="download-button" id="pdf-download">
+                        📄 Скачать расписание тура 2026 (PDF)
+                    </a>
+                </p>
+            </section>
+        </main>
+
+        <footer id="page-footer">
+            <p>&copy; 2026 Фан-сайт Мартин. Создано в учебных целях.</p>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            // === УПРАВЛЕНИЕ АВТОРИЗАЦИЕЙ ===
+            const currentToken = localStorage.getItem('authToken');
+            const mainContent = document.getElementById('main-content');
+            const userHeader = document.getElementById('user-header');
+            const usernameDisplay = document.getElementById('username-display');
+            const logoutBtn = document.getElementById('logout-btn');
+
+            // Проверка авторизации
+            function checkAuth() {
+                if (!currentToken) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                // Проверяем валидность токена на сервере
+                fetch('api/check_auth.php?token=' + encodeURIComponent(currentToken))
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.authenticated) {
+                            showMainContent(data.username);
+                            initializeApp();
+                        } else {
+                            localStorage.removeItem('authToken');
+                            localStorage.removeItem('username');
+                            window.location.href = 'login.html';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Auth check error:', err);
+                        window.location.href = 'login.html';
+                    });
+            }
+
+            function showMainContent(username) {
+                mainContent.style.display = 'block';
+                userHeader.style.display = 'flex';
+                usernameDisplay.textContent = username;
+            }
+
+            logoutBtn.addEventListener('click', function() {
+                logout();
+            });
+
+            function logout() {
+                const token = localStorage.getItem('authToken');
+                fetch('api/logout.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ token: token })
+                })
+                .then(() => {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('username');
+                    window.location.href = 'login.html';
+                })
+                .catch(err => {
+                    console.error('Logout error:', err);
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('username');
+                    window.location.href = 'login.html';
+                });
+            }
+
+            // === УПРАВЛЕНИЕ ДАННЫМИ (АЛЬБОМЫ) ===
+            function initializeApp() {
+                const albumsUrl = 'data/albums.json';
+                const saveUrl = 'api/save_albums.php';
+                const tbody = document.getElementById('albums-tbody');
+                const form = document.getElementById('add-album-form');
+                const messageEl = document.getElementById('form-message');
+
+                function showMessage(text, isError) {
+                    messageEl.textContent = text;
+                    messageEl.className = 'form-message ' + (isError ? 'error' : 'success');
+                }
+
+                // Клиентская валидация
+                function validateYear(year) {
+                    if (!year || year.trim().length === 0) {
+                        return 'Год обязателен';
+                    }
+                    if (!/^\d{4}$/.test(year.trim())) {
+                        return 'Год должен состоять из 4 цифр (например, 2025)';
+                    }
+                    const yearVal = parseInt(year.trim());
+                    if (yearVal < 1900 || yearVal > 2100) {
+                        return 'Год должен быть между 1900 и 2100';
+                    }
+                    return null;
+                }
+
+                function validateTitle(title) {
+                    if (!title || title.trim().length === 0) {
+                        return 'Название альбома обязательно';
+                    }
+                    if (title.trim().length < 2) {
+                        return 'Название должно содержать минимум 2 символа';
+                    }
+                    if (title.trim().length > 100) {
+                        return 'Название не должно превышать 100 символов';
+                    }
+                    return null;
+                }
+
+                function clearErrors() {
+                    document.getElementById('album-year-error').textContent = '';
+                    document.getElementById('album-title-error').textContent = '';
+                }
+
+                function showFieldError(elementId, message) {
+                    const el = document.getElementById(elementId);
+                    if (el) el.textContent = message;
+                }
+
+                function escapeHtml(s) {
+                    const div = document.createElement('div');
+                    div.textContent = s;
+                    return div.innerHTML;
+                }
+
+                function renderTable(albums) {
+                    tbody.innerHTML = '';
+                    if (!Array.isArray(albums) || albums.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="3">Нет данных</td></tr>';
+                        return;
+                    }
+                    albums.forEach(function (a, index) {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = '<td>' + escapeHtml(a.year) + '</td><td>' + escapeHtml(a.title) + '</td>';
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                function loadAlbums() {
+                    fetch(albumsUrl)
+                        .then(function (r) {
+                            if (!r.ok) throw new Error('HTTP ' + r.status);
+                            return r.json();
+                        })
+                        .then(renderTable)
+                        .catch(function (err) {
+                            var msg = 'Не удалось загрузить данные. ';
+                            if (err.message && err.message.indexOf('HTTP') === 0) msg += err.message + '. ';
+                            msg += 'Откройте сайт через веб-сервер (http://...).';
+                            tbody.innerHTML = '<tr><td colspan="2">' + escapeHtml(msg) + '</td></tr>';
+                        });
+                }
+
+
+
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    
+                    clearErrors();
+                    let hasError = false;
+
+                    const year = document.getElementById('album-year').value;
+                    const title = document.getElementById('album-title').value;
+
+                    const yearErr = validateYear(year);
+                    if (yearErr) {
+                        showFieldError('album-year-error', yearErr);
+                        hasError = true;
+                    }
+
+                    const titleErr = validateTitle(title);
+                    if (titleErr) {
+                        showFieldError('album-title-error', titleErr);
+                        hasError = true;
+                    }
+
+                    if (hasError) return;
+
+                    showMessage('Сохранение…', false);
+                    
+                    const year_trimmed = year.trim();
+                    const title_trimmed = title.trim();
+                    
+                    const url = saveUrl + '?year=' + encodeURIComponent(year_trimmed) + '&title=' + encodeURIComponent(title_trimmed);
+                    fetch(url, { method: 'GET' })
+                        .then(function (r) {
+                            return r.text().then(function (text) {
+                                if (text.indexOf('<?php') !== -1) {
+                                    return { ok: false, data: { success: false, error: 'php_not_configured' } };
+                                }
+                                try {
+                                    return { ok: r.ok, data: JSON.parse(text) };
+                                } catch (e) {
+                                    return { ok: false, data: { success: false, error: r.status + ': неверный ответ сервера' } };
+                                }
+                            });
+                        })
+                        .then(function (res) {
+                            var data = res.data;
+                            if (res.ok && data.success) {
+                                showMessage('Альбом добавлен и сохранён в файл.', false);
+                                form.reset();
+                                clearErrors();
+                                loadAlbums();
+                            } else if (data.error === 'php_not_configured') {
+                                showMessage('Сервер отдаёт PHP как текст — он не настроен на выполнение PHP. Добавьте в конфиг nginx блок для PHP и перезапустите nginx.', true);
+                            } else {
+                                showMessage(data.error || 'Ошибка сохранения', true);
+                            }
+                        })
+                        .catch(function (err) {
+                            showMessage('Ошибка: ' + (err.message || 'сервер недоступен'), true);
+                        });
+                });
+
+                loadAlbums();
+            }
+
+            // Проверяем авторизацию при загрузке страницы
+            checkAuth();
+        })();
+    </script>
+</body>
+</html>

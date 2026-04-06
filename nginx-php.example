@@ -1,0 +1,40 @@
+# Пример настройки nginx для выполнения PHP (чтобы форма «Добавить альбом» сохраняла в data/albums.json).
+# Скопируйте нужный блок в ваш server { } в конфиге nginx (например nginx.conf или sites-available/default).
+
+# Вариант 1: сайт в корне (например http://localhost/)
+# Внутри server { ... } добавьте:
+
+    location ~ \.php$ {
+        root           C:/nginx/html;           # путь к папке с сайтами (подставьте свой)
+        fastcgi_pass   127.0.0.1:9123;          # порт PHP (см. ниже)
+        fastcgi_index  index.php;св
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+# Вариант 2: сайт в подпапке lab2 (например http://localhost/lab2/)
+# Убедитесь, что в server есть:
+#   location / {
+#       root   C:/nginx/html;
+#       index  index.html index.php;
+#   }
+# и добавьте отдельно:
+
+    location ~ \.php$ {
+        root           C:/nginx/html;
+        fastcgi_pass   127.0.0.1:9123;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+# --- Запуск PHP ---
+# 1) Установите PHP (например с https://windows.php.net/download/).
+# 2) Запустите PHP в режиме CGI на порту 9000 (или 9000):
+#    php-cgi -b 127.0.0.1:9000
+#    Или через RunHiddenConsole: php-cgi -b 127.0.0.1:9123
+# 3) В fastcgi_pass укажите тот же порт: 127.0.0.1:9123
+# 4) Перезапустите nginx: nginx -s reload
+
+# Если используете порт 9000:
+#   fastcgi_pass 127.0.0.1:9000;

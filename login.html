@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МАРТИН | Вход / Регистрация</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+</head>
+<body>
+    <div class="container" id="page-container">
+        <header>
+            <h1 id="main-title">Мартин</h1>
+        </header>
+
+        <main class="auth-content">
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" data-tab="login">Вход</button>
+                    <button class="auth-tab-btn" data-tab="register">Регистрация</button>
+                </div>
+
+                <!-- Форма входа -->
+                <div class="auth-tab-content active" id="login-tab">
+                    <h2>Вход в аккаунт</h2>
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="login-username">Имя пользователя</label>
+                            <input type="text" id="login-username" name="username" placeholder="Введите имя пользователя" required>
+                            <span class="error-message" id="login-username-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Пароль</label>
+                            <input type="password" id="login-password" name="password" placeholder="Введите пароль" required>
+                            <span class="error-message" id="login-password-error"></span>
+                        </div>
+                        <div class="auth-message" id="login-message"></div>
+                        <button type="submit" class="auth-submit-btn">Войти</button>
+                    </form>
+                </div>
+
+                <!-- Форма регистрации -->
+                <div class="auth-tab-content" id="register-tab">
+                    <h2>Создать новый аккаунт</h2>
+                    <form id="register-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="register-username">Имя пользователя</label>
+                            <input type="text" id="register-username" name="username" placeholder="3-20 символов (буквы, цифры, подчеркивание)" required>
+                            <span class="error-message" id="register-username-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" name="email" placeholder="example@email.com" required>
+                            <span class="error-message" id="register-email-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Пароль</label>
+                            <input type="password" id="register-password" name="password" placeholder="Минимум 6 символов" required>
+                            <span class="error-message" id="register-password-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password-confirm">Повторите пароль</label>
+                            <input type="password" id="register-password-confirm" name="passwordConfirm" placeholder="Повторите пароль" required>
+                            <span class="error-message" id="register-password-confirm-error"></span>
+                        </div>
+                        <div class="auth-message" id="register-message"></div>
+                        <button type="submit" class="auth-submit-btn">Зарегистрироваться</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer id="page-footer">
+            <p>&copy; 2026 Фан-сайт Мартин. Создано в учебных целях.</p>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            // Переключение между вкладками
+            const tabBtns = document.querySelectorAll('.auth-tab-btn');
+            const tabContents = document.querySelectorAll('.auth-tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+
+                    this.classList.add('active');
+                    document.getElementById(tabName + '-tab').classList.add('active');
+
+                    clearMessages();
+                    clearInputs();
+                });
+            });
+
+            // Очищение всех сообщений об ошибках
+            function clearMessages() {
+                document.querySelectorAll('.auth-message, .error-message').forEach(el => {
+                    el.textContent = '';
+                    el.className = el.className.replace(' show', '');
+                });
+            }
+
+            // Очищение всех полей ввода
+            function clearInputs() {
+                document.querySelectorAll('.auth-form input').forEach(input => {
+                    input.value = '';
+                });
+            }
+
+            // Валидация на клиенте
+            function validateUsername(username) {
+                if (!username || username.trim().length === 0) {
+                    return 'Имя пользователя обязательно';
+                }
+                if (username.length < 3) {
+                    return 'Имя пользователя должно содержать минимум 3 символа';
+                }
+                if (username.length > 20) {
+                    return 'Имя пользователя не должно превышать 20 символов';
+                }
+                if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                    return 'Имя пользователя может содержать только буквы, цифры и подчеркивание';
+                }
+                return null;
+            }
+
+            function validateEmail(email) {
+                if (!email || email.trim().length === 0) {
+                    return 'Email обязателен';
+                }
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    return 'Некорректный формат email';
+                }
+                return null;
+            }
+
+            function validatePassword(password) {
+                if (!password) {
+                    return 'Пароль обязателен';
+                }
+                if (password.length < 6) {
+                    return 'Пароль должен содержать минимум 6 символов';
+                }
+                return null;
+            }
+
+            function showMessage(elementId, message, isError = true) {
+                const el = document.getElementById(elementId);
+                if (!el) return;
+                el.textContent = message;
+                el.className = 'auth-message' + (isError ? ' error' : ' success');
+            }
+
+            function showFieldError(elementId, message) {
+                const el = document.getElementById(elementId);
+                if (!el) return;
+                el.textContent = message;
+            }
+
+            // Форма входа
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    clearMessages();
+                    let hasError = false;
+
+                    const username = document.getElementById('login-username').value;
+                    const password = document.getElementById('login-password').value;
+
+                    const usernameErr = validateUsername(username);
+                    if (usernameErr) {
+                        showFieldError('login-username-error', usernameErr);
+                        hasError = true;
+                    }
+
+                    const passwordErr = validatePassword(password);
+                    if (passwordErr) {
+                        showFieldError('login-password-error', passwordErr);
+                        hasError = true;
+                    }
+
+                    if (hasError) return;
+
+                    showMessage('login-message', 'Вход...', false);
+
+                    fetch('api/login.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password
+                        })
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success && data.token) {
+                            localStorage.setItem('authToken', data.token);
+                            localStorage.setItem('username', data.username);
+                            showMessage('login-message', 'Вход выполнен успешно! Перенаправляем...', false);
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 1000);
+                        } else {
+                            showMessage('login-message', data.error || 'Ошибка входа', true);
+                        }
+                    })
+                    .catch(err => {
+                        showMessage('login-message', 'Ошибка сервера: ' + err.message, true);
+                    });
+                });
+            }
+
+            // Форма регистрации
+            const registerForm = document.getElementById('register-form');
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    clearMessages();
+                    let hasError = false;
+
+                    const username = document.getElementById('register-username').value;
+                    const email = document.getElementById('register-email').value;
+                    const password = document.getElementById('register-password').value;
+                    const passwordConfirm = document.getElementById('register-password-confirm').value;
+
+                    const usernameErr = validateUsername(username);
+                    if (usernameErr) {
+                        showFieldError('register-username-error', usernameErr);
+                        hasError = true;
+                    }
+
+                    const emailErr = validateEmail(email);
+                    if (emailErr) {
+                        showFieldError('register-email-error', emailErr);
+                        hasError = true;
+                    }
+
+                    const passwordErr = validatePassword(password);
+                    if (passwordErr) {
+                        showFieldError('register-password-error', passwordErr);
+                        hasError = true;
+                    }
+
+                    if (password !== passwordConfirm) {
+                        showFieldError('register-password-confirm-error', 'Пароли не совпадают');
+                        hasError = true;
+                    }
+
+                    if (hasError) return;
+
+                    showMessage('register-message', 'Регистрация...', false);
+
+                    fetch('api/register.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            email: email,
+                            password: password
+                        })
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            showMessage('register-message', 'Регистрация успешна! Перейдите на вкладку "Вход"', false);
+                            setTimeout(() => {
+                                document.querySelector('[data-tab="login"]').click();
+                            }, 2000);
+                        } else {
+                            showMessage('register-message', data.error || 'Ошибка регистрации', true);
+                        }
+                    })
+                    .catch(err => {
+                        showMessage('register-message', 'Ошибка сервера: ' + err.message, true);
+                    });
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мартин | Тур и дискография</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+</head>
+<body>
+    <div class="container" id="page-container">
+        <header>
+            <h1 id="main-title">Концерты и тур мартин 2026</h1>
+            <div class="user-header" id="user-header" style="display: none;">
+                <div class="user-info">Добро пожаловать, <span id="username-display"></span>!</div>
+                <button class="logout-btn" id="logout-btn">Выход</button>
+            </div>
+        </header>
+        
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" id="home-link">Главная</a></li>
+                <li><a href="tour.html" class="nav-link active" id="tour-link">Дискография и тур</a></li>
+            </ul>
+        </nav>
+
+        <main class="content" id="main-content" style="display: none;">
+            <section class="tour-dates">
+                <h2 class="section-title">Концертный тур 2026</h2>
+                <table class="tour-table">
+                    <thead>
+                        <tr>
+                            <th>Город</th>
+                            <th>Дата</th>
+                            <th>Место проведения</th>
+                            <th>Билеты</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Калининград</td>
+                            <td>22 февраля 2026</td>
+                            <td>Yalta</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Владивосток</td>
+                            <td>28 февраля 2026</td>
+                            <td>MIX</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Хабаровск</td>
+                            <td>1 марта 2026</td>
+                            <td>LOONA</td>
+                            <td><span class="ticket-status few">Мало</span></td>
+                        </tr>
+                        <tr>
+                            <td>Иркутск</td>
+                            <td>3 марта 2026</td>
+                            <td>SOPRANO</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Красноярск</td>
+                            <td>4 марта 2026</td>
+                            <td>CIRCUS</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Барнаул</td>
+                            <td>6 марта 2026</td>
+                            <td>Опера</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Новосибирск</td>
+                            <td>7 марта 2026</td>
+                            <td>Подземка</td>
+                            <td><span class="ticket-status few">Мало</span></td>
+                        </tr>
+                        <tr>
+                            <td>Рязань</td>
+                            <td>13 марта 2026</td>
+                            <td>Свобода</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Тула</td>
+                            <td>14 марта 2026</td>
+                            <td>Mini</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Липецк</td>
+                            <td>15 марта 2026</td>
+                            <td>Клуб 12</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Тамбов</td>
+                            <td>17 марта 2026</td>
+                            <td>H2O</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Волгоград</td>
+                            <td>18 марта 2026</td>
+                            <td>КРОП АРЕНА</td>
+                            <td><span class="ticket-status few">Мало</span></td>
+                        </tr>
+                        <tr>
+                            <td>Саратов</td>
+                            <td>19 марта 2026</td>
+                            <td>onyx</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Пенза</td>
+                            <td>21 марта 2026</td>
+                            <td>Montana</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Чебоксары</td>
+                            <td>22 марта 2026</td>
+                            <td>Neon</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ижевск</td>
+                            <td>24 марта 2026</td>
+                            <td>nobel</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Киров</td>
+                            <td>25 марта 2026</td>
+                            <td>Mr.Green</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ярославль</td>
+                            <td>27 марта 2026</td>
+                            <td>Руки ВВерх</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Владимир</td>
+                            <td>28 марта 2026</td>
+                            <td>Цех</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Тверь</td>
+                            <td>29 марта 2026</td>
+                            <td>Zerkalo</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Санкт-Петербург</td>
+                            <td>24 октября 2026</td>
+                            <td>SOUND</td>
+                            <td><span class="ticket-status available">В наличии</span></td>
+                        </tr>
+                        <tr>
+                            <td>Москва</td>
+                            <td>7 ноября 2026</td>
+                            <td>VK Stadium</td>
+                            <td><span class="ticket-status few">Мало</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="top-songs">
+                <h2 class="section-title">Популярные треки</h2>
+                <ol class="top-tracks-list" id="top-tracks">
+                    <li>ты случилась</li>
+                    <li>жду тебя</li>
+                    <li>водопадами</li>
+                    <li>позову звезды смотреть на тебя</li>
+                    <li>целый мир</li>
+                    <li>чао</li>
+                    <li>холодом по спине</li>
+                    <li>фоткаю на глаза</li>
+                    <li>что со мной?</li>
+                    <li>больно</li>
+                </ol>
+            </section>
+
+            <section class="albums-info">
+                <h2 class="section-title">Популярные альбомы</h2>
+                <table class="albums-table">
+                    <thead>
+                        <tr>
+                            <th>Год</th>
+                            <th>Название</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2026</td>
+                            <td>чао</td>
+                        </tr>
+                        <tr>
+                            <td>2025</td>
+                            <td>пока лето не кончилось</td>
+                        </tr>
+                        <tr>
+                            <td>2024</td>
+                            <td>ещё один день</td>
+                        </tr>
+                        <tr>
+                            <td>2025</td>
+                            <td>жду тебя</td>
+                        </tr>
+                        <tr>
+                            <td>2025</td>
+                            <td>водопадами</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="download-section">
+                <h2 class="section-title">Материалы для скачивания</h2>
+                <p class="download-link">
+                    <a href="assets/tour-schedule.pdf" download class="download-button" id="pdf-download">
+                        📄 Скачать полное расписание тура (PDF)
+                    </a>
+                </p>
+            </section>
+        </main>
+
+        <footer id="page-footer">
+            <p>&copy; 2026 Фан-сайт Мартин. Создано в учебных целях.</p>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            const currentToken = localStorage.getItem('authToken');
+            const mainContent = document.getElementById('main-content');
+            const userHeader = document.getElementById('user-header');
+            const usernameDisplay = document.getElementById('username-display');
+            const logoutBtn = document.getElementById('logout-btn');
+
+            function checkAuth() {
+                if (!currentToken) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                fetch('api/check_auth.php?token=' + encodeURIComponent(currentToken))
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.authenticated) {
+                            mainContent.style.display = 'block';
+                            userHeader.style.display = 'flex';
+                            usernameDisplay.textContent = data.username;
+                        } else {
+                            localStorage.removeItem('authToken');
+                            localStorage.removeItem('username');
+                            window.location.href = 'login.html';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Auth check error:', err);
+                        window.location.href = 'login.html';
+                    });
+            }
+
+            logoutBtn.addEventListener('click', function() {
+                const token = localStorage.getItem('authToken');
+                fetch('api/logout.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ token: token })
+                })
+                .then(() => {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('username');
+                    window.location.href = 'login.html';
+                })
+                .catch(err => {
+                    console.error('Logout error:', err);
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('username');
+                    window.location.href = 'login.html';
+                });
+            });
+
+            checkAuth();
+        })();
+    </script>
+</body>
+</html>
